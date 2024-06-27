@@ -11,14 +11,12 @@ import (
 	"github.com/google/uuid"
 )
 
-// Request represents the incoming request structure
 type Request struct {
 	Method  string            `json:"method"`
 	URL     string            `json:"url"`
 	Headers map[string]string `json:"headers"`
 }
 
-// Response represents the response structure to the client
 type Response struct {
 	ID      string            `json:"id"`
 	Status  int               `json:"status"`
@@ -26,7 +24,6 @@ type Response struct {
 	Length  int               `json:"length"`
 }
 
-// Store for saving requests and responses
 var store sync.Map
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -36,7 +33,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate URL
 	_, err := url.ParseRequestURI(req.URL)
 	if err != nil {
 		http.Error(w, "Invalid URL", http.StatusBadRequest)
@@ -50,7 +46,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Set headers
 	for key, value := range req.Headers {
 		proxyReq.Header.Set(key, value)
 	}
@@ -62,17 +57,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	// Read response body
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, "Failed to read response body", http.StatusInternalServerError)
 		return
 	}
 
-	// Generate unique request ID
 	requestID := uuid.New().String()
 
-	// Save the request and response to store
 	store.Store(requestID, Response{
 		ID:      requestID,
 		Status:  resp.StatusCode,
@@ -80,7 +72,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Length:  len(body),
 	})
 
-	// Create response to client
 	clientResp := Response{
 		ID:      requestID,
 		Status:  resp.StatusCode,
@@ -102,6 +93,5 @@ func flattenHeaders(headers http.Header) map[string]string {
 
 func main() {
 	http.HandleFunc("/proxy", handler)
-	fmt.Println("Server is running on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
