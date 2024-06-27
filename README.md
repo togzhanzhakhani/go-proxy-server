@@ -25,19 +25,17 @@ make build
 make run
 ```
 
-Deployed on RENDER:
+## Deployed on RENDER:
 
-Base URL
+### Base URL
 https://go-proxy-server.onrender.com
 
-Endpoint
-
+### Endpoint
 URL: /proxy
 Method: POST
 Content-Type: application/json
 
-Request Body:
-
+### Request Body:
 {
   "method": "GET",           // The HTTP method (GET, POST, etc.) to use for the proxied request.
   "url": "http://example.com", // The URL of the third-party service to which the request will be forwarded.
@@ -47,8 +45,7 @@ Request Body:
   }
 }
 
-Response:
-
+### Response:
 {
   "id": "requestId",         // A unique identifier for the request.
   "status": 200,             // The HTTP status code returned by the third-party service.
