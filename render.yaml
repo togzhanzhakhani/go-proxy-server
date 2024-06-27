@@ -2,7 +2,7 @@ services:
   - type: web
     name: go-proxy-server
     env: docker
-    repo: https://github.com/your-username/go-proxy-server
+    repo: https://github.com/togzhanzhakhani/go-proxy-server
     branch: main
     plan: free
     dockerfilePath: Dockerfile

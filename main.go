@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"sync"
+	"os"
 	"github.com/google/uuid"
 )
 
@@ -92,5 +93,10 @@ func flattenHeaders(headers http.Header) map[string]string {
 
 func main() {
 	http.HandleFunc("/proxy", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Fatal(http.ListenAndServe(":"+port, nil))
+
 }
