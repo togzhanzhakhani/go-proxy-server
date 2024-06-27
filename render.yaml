@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: go-proxy-server
+    env: docker
+    repo: https://github.com/your-username/go-proxy-server
+    branch: main
+    plan: free
+    dockerfilePath: Dockerfile
+    buildCommand: make docker-build
+    startCommand: make docker-run
+    autoDeploy: true
