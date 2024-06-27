@@ -36,6 +36,7 @@ Method: POST
 Content-Type: application/json
 
 ### Request Body:
+```sh
 {
   "method": "GET",           // The HTTP method (GET, POST, etc.) to use for the proxied request.
   "url": "http://example.com", // The URL of the third-party service to which the request will be forwarded.
@@ -44,8 +45,9 @@ Content-Type: application/json
     "User-Agent": "YourCustomUserAgent"
   }
 }
-
+```
 ### Response:
+```sh
 {
   "id": "requestId",         // A unique identifier for the request.
   "status": 200,             // The HTTP status code returned by the third-party service.
@@ -55,3 +57,4 @@ Content-Type: application/json
   },
   "length": 1256             // The length of the response body from the third-party service.
 }
+```
