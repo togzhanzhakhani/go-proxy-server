@@ -1,13 +1,7 @@
-.PHONY: build run docker-build docker-run
+.PHONY: build run
 
 build:
-	go build -o go-proxy-server .
+	docker-compose build
 
-run: build
-	./go-proxy-server
-
-docker-build:
-	docker build -t go-proxy-server .
-
-docker-run:
-	docker-compose up --build
+run:
+	docker-compose up

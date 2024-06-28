@@ -9,7 +9,7 @@ This project is an HTTP proxy server built in Go. It receives requests from clie
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-username/go-proxy-server.git
+git clone https://github.com/togzhanzhakhani/go-proxy-server.git
 cd go-proxy-server
 ```
 
