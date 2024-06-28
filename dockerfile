@@ -1,24 +1,19 @@
-# Use the official Golang image to create a build artifact.
-# This container will include the source code and compile the application.
-FROM golang:1.20 as builder
+FROM golang:1.20 AS builder
 
-# Set the Current Working Directory inside the container
 WORKDIR /app
 
-# Copy the source from the current directory to the Working Directory inside the container
+COPY go.mod go.sum ./
+
+RUN go mod download
+
 COPY . .
 
-# Build the Go app
-RUN go build -o go-proxy-server .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go-proxy-server
 
-# Start a new stage from scratch
-FROM debian:bullseye-slim
+FROM alpine:latest  
 
-# Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/go-proxy-server /go-proxy-server
+COPY --from=builder /go-proxy-server /go-proxy-server
 
-# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Command to run the executable
-CMD ["/go-proxy-server"]
+ENTRYPOINT ["/go-proxy-server"]
